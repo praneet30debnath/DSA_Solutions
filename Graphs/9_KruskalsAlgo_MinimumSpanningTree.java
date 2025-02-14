@@ -40,15 +40,17 @@ public class Solution {
         int minWeight = 0;
 
         for(int i=0;i<edges.size();i++) {
-            int u = findParent(parent, edges.get(i).get(0));
-            int v = findParent(parent, edges.get(i).get(1));
+            int u = edges.get(i).get(0);
+            int v = edges.get(i).get(1);
             int wt = edges.get(i).get(2);
 
-            if(u != v) {
+            int rootU = findParent(parent, u);
+            int rootV = findParent(parent, v);
+
+            if (rootU != rootV) {
                 minWeight += wt;
-                unionSet(parent, rank, u, v);
+                unionSet(parent, rank, rootU, rootV);
             }
-        }
 
         return minWeight;
 	}
