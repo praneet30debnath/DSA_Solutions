@@ -1,4 +1,5 @@
 //https://www.geeksforgeeks.org/problems/geek-jump/1?utm_source=youtube&utm_medium=collab_striver_ytdescription&utm_campaign=geek-jump
+//https://takeuforward.org/data-structure/dynamic-programming-frog-jump-dp-3/
 
 class Solution {
     static int solve(int ind,int[] height,int[] dp){
