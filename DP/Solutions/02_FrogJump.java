@@ -4,6 +4,7 @@
 class Solution {
     private static final String MEMOIZATION = "MEMOIZATION";
     private static final String TABULAR = "TABULAR";
+    private static final String TABULAR_OPTIMIZED = "TABULAR_OPTIMIZED";
     
     static int solveMemoization(int ind,int[] height,int[] dp){
         if(ind==0) return 0;
@@ -29,18 +30,41 @@ class Solution {
         return dp[dp.length-1];
     }
     
-    int minCost(int[] height) {
-        String approach = MEMOIZATION;
-        
-        int[] dp = new int[height.length];
-        for(int i=0;i<dp.length;i++) {
-            dp[i] = -1;
+    static int solveTabularSpaceOpt(int[] height) {
+        int prev = 0;
+        int prev2 = 0;
+        for(int ind=1;ind<height.length;ind++) {
+            int firstStep = prev + Math.abs(height[ind]-height[ind-1]);
+            int secondStep = Integer.MAX_VALUE;
+            if(ind-2>=0) {
+                secondStep = prev2 + Math.abs(height[ind]-height[ind-2]);
+            }
+            int curr = Math.min(firstStep, secondStep);
+            prev2 = prev;
+            prev = curr;
         }
+        return prev;
+    }
+    
+    int minCost(int[] height) {
+        String approach = TABULAR_OPTIMIZED;
         
-        if(approach.equals(MEMOIZATION))
+        if(approach.equals(MEMOIZATION)) {
+            int[] dp = new int[height.length];
+            for(int i=0;i<dp.length;i++) {
+                dp[i] = -1;
+            }
             return solveMemoization(height.length-1,height,dp);
-        if(approach.equals(TABULAR))
+        }
+        if(approach.equals(TABULAR)) {
+            int[] dp = new int[height.length];
+            for(int i=0;i<dp.length;i++) {
+                dp[i] = -1;
+            }
             return solveTabular(dp,height);
+        }
+        if(approach.equals(TABULAR_OPTIMIZED))
+            return solveTabularSpaceOpt(height);
         return 0;
     }
 }
